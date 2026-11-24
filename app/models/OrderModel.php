@@ -198,6 +198,61 @@ function hasOrderReview(int $orderId): bool {
     return (int) $stmt->fetchColumn() > 0;
 }
 
+function createOrderPayment(int $orderId, int $userId, string $proofFilename): array {
+    $pdo = getDBConnection();
+
+    try {
+        $pdo->beginTransaction();
+
+        // kunci pesanan agar klik ganda / dua tab engga membuat dua payment
+        $stmtLock = $pdo->prepare(
+            "SELECT status FROM orders WHERE order_id = :oid AND user_id = :uid FOR UPDATE"
+        );
+        $stmtLock->execute(['oid' => $orderId, 'uid' => $userId]);
+        $status = $stmtLock->fetchColumn();
+
+        if ($status === false) {
+            $pdo->rollBack();
+            return ['ok' => false, 'message' => 'Pesanan tidak ditemukan.'];
+        }
+
+        if ($status !== 'Belum Dibayar') {
+            $pdo->rollBack();
+            return ['ok' => false, 'message' => 'Pesanan ini tidak dapat dibayar. Status pesanan telah berubah.'];
+        }
+
+        $stmtCheck = $pdo->prepare("SELECT COUNT(*) FROM payments WHERE order_id = :oid");
+        $stmtCheck->execute(['oid' => $orderId]);
+        if ((int) $stmtCheck->fetchColumn() > 0) {
+            $pdo->rollBack();
+            return ['ok' => false, 'message' => 'Bukti pembayaran untuk pesanan ini sudah dikirim.'];
+        }
+
+        $stmtPay = $pdo->prepare("INSERT INTO payments (order_id, payment_proof) VALUES (:oid, :proof)");
+        $stmtPay->execute(['oid' => $orderId, 'proof' => $proofFilename]);
+
+        $stmtOrd = $pdo->prepare(
+            "UPDATE orders SET status = 'Menunggu Verifikasi'
+             WHERE order_id = :oid AND user_id = :uid AND status = 'Belum Dibayar'"
+        );
+        $stmtOrd->execute(['oid' => $orderId, 'uid' => $userId]);
+
+        if ($stmtOrd->rowCount() !== 1) {
+            $pdo->rollBack();
+            return ['ok' => false, 'message' => 'Gagal memperbarui status pesanan.'];
+        }
+
+        $pdo->commit();
+        return ['ok' => true];
+    } catch (Throwable $e) {
+        if ($pdo->inTransaction()) {
+            $pdo->rollBack();
+        }
+        error_log($e->getMessage());
+        return ['ok' => false, 'message' => 'Gagal menyimpan bukti pembayaran. Silakan coba lagi.'];
+    }
+}
+
 function verifyOrderPayment(int $orderId, string $decision, ?string $rejectionReason = null): array {
     $order = getOrderWithDetailsById($orderId);
     if (!$order) {

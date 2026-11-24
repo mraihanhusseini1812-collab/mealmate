@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../models/OrderModel.php';
+require_once __DIR__ . '/../helpers/upload.php';
 
 requireRole('Pelanggan');
 
@@ -24,6 +25,38 @@ $detailUrl = 'index.php?page=order-detail&id=' . $orderId;
 
 if ($order['status'] !== 'Belum Dibayar' || !empty($order['payment_id'])) {
     setFlash('warning', 'Pesanan ini tidak dapat dibayar. Bukti pembayaran sudah dikirim atau status pesanan telah berubah.');
+    redirect($detailUrl);
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $paymentUrl = 'index.php?page=payment&order_id=' . $orderId;
+
+    if (empty($_POST) && empty($_FILES) && (int) ($_SERVER['CONTENT_LENGTH'] ?? 0) > 0) {
+        redirectWithErrors($paymentUrl, [
+            'payment_proof' => 'Ukuran berkas melebihi batas unggahan server (maksimal 2 MB).',
+        ]);
+    }
+
+    $upload = validateAndUploadImage(
+        $_FILES['payment_proof'] ?? ['error' => UPLOAD_ERR_NO_FILE],
+        __DIR__ . '/../../public/assets/img',
+        'pay_'
+    );
+
+    if (!$upload['ok']) {
+        redirectWithErrors($paymentUrl, ['payment_proof' => $upload['error']]);
+    }
+
+    $result = createOrderPayment($orderId, $currentUserId, $upload['filename']);
+
+    if (!$result['ok']) {
+        // buang berkas yang sudah terunggah ketika transaksi gagal 
+        @unlink(__DIR__ . '/../../public/assets/img/' . $upload['filename']);
+        setFlash('danger', $result['message']);
+        redirect($detailUrl);
+    }
+
+    setFlash('success', 'Bukti pembayaran berhasil dikirim. Pesanan Anda sedang menunggu verifikasi admin.');
     redirect($detailUrl);
 }
 
