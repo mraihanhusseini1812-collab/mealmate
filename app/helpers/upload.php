@@ -5,7 +5,7 @@ function validateAndUploadImage(
     string $targetDir,
     string $prefix = 'img_',
     int $maxBytes = 2097152,
-    array $allowedMimes = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp']
+    array $allowedMimes = ['image/jpeg' => 'jpg', 'image/png' => 'png']
 ): array {
     if (!isset($file['error']) || is_array($file['error']) || $file['error'] === UPLOAD_ERR_NO_FILE) {
         return [

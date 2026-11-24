@@ -221,8 +221,8 @@ $endRow = min($offset + $perPage, $totalPackages);
                     </div>
 
                     <div class="mb-2">
-                        <label for="image" class="form-label fw-medium small">Foto Paket (JPG, PNG, WEBP maks 2 MB)</label>
-                        <input type="file" name="image" id="image" accept=".jpg,.jpeg,.png,.webp"
+                        <label for="image" class="form-label fw-medium small">Foto Paket (JPG, PNG maks 2 MB)</label>
+                        <input type="file" name="image" id="image" accept=".jpg,.jpeg,.png"
                                class="form-control <?= !empty($errors['image']) ? 'is-invalid' : '' ?>">
                         <?php if (!empty($errors['image'])): ?>
                             <div class="invalid-feedback d-block"><?= htmlspecialchars($errors['image']) ?></div>

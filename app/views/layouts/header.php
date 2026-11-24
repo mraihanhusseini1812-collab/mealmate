@@ -22,6 +22,8 @@ $flash = $flash ?? getFlash();
         <link rel="stylesheet" href="./assets/css/checkout.css">
     <?php elseif ($currentPage === 'profile'): ?>
         <link rel="stylesheet" href="./assets/css/profile.css">
+    <?php elseif ($currentPage === 'payment'): ?>
+        <link rel="stylesheet" href="./assets/css/payment.css">
     <?php endif; ?>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
