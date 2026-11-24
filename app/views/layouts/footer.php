@@ -62,5 +62,8 @@
         <script src="./assets/js/flash-toast.js"></script>
         <script src="./assets/js/profile.js"></script>
     <?php endif; ?>
+    <?php if (($_GET['page'] ?? '') === 'payment'): ?>
+        <script src="./assets/js/payment.js"></script>
+    <?php endif; ?>
 </body>
 </html>
