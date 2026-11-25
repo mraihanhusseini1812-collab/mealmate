@@ -38,6 +38,7 @@ $isReviewed = hasOrderReview($orderId);
 render('customer/order_detail', [
     'title' => 'Detail Pesanan #ORD-' . str_pad((string) $order['order_id'], 3, '0', STR_PAD_LEFT) . ' - MealMate',
     'page' => 'order-detail',
+    'hideFooter' => true,
     'order' => $order,
     'isReviewed' => $isReviewed,
 ]);

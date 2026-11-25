@@ -30,14 +30,14 @@
 
 .payment-title {
     color: #13523C;
-    font-size: clamp(1.5rem, 3vw, 1.9rem);
+    font-size: clamp(1.35rem, 2.5vw, 1.65rem);
     font-weight: 700;
 }
 
 .payment-subtitle {
     color: #6B726E;
     font-size: 0.8rem;
-    line-height: 1.5;
+    line-height: 1.45;
 }
 
 .payment-order-code {
@@ -50,37 +50,37 @@
 .payment-total-box {
     background-color: #F6F7F2;
     border-radius: 14px;
-    padding: 16px 20px;
+    padding: 12px 18px;
 }
 
 .payment-total-label {
     color: #2E3A33;
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     font-weight: 600;
 }
 
 .payment-total-value {
     color: #13523C;
-    font-size: 1.6rem;
+    font-size: 1.45rem;
     font-weight: 700;
-    line-height: 1.3;
+    line-height: 1.25;
 }
 
 .payment-section-title {
     color: #1F5A3F;
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 700;
 }
 
 .payment-section-hint {
     color: #8A948E;
-    font-size: 0.78rem;
+    font-size: 0.76rem;
 }
 
 .payment-bank-card {
     border: 1px solid #E6E1D6;
     border-radius: 12px;
-    padding: 14px 16px;
+    padding: 12px 16px;
 }
 
 .payment-bank-logo {
@@ -163,12 +163,11 @@
     }
 }
 
-/* dropzone */
 .payment-dropzone {
     border: 1.5px dashed #7D8A82;
     border-radius: 14px;
     background-color: #F6F8F5;
-    padding: 24px 20px;
+    padding: 16px 20px;
     transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
@@ -184,13 +183,13 @@
 .payment-dropzone-icon {
     display: block;
     color: #1F4B3A;
-    font-size: 2.1rem;
+    font-size: 1.85rem;
     line-height: 1;
 }
 
 .payment-dropzone-title {
     color: #1E2923;
-    font-size: 0.85rem;
+    font-size: 0.84rem;
     font-weight: 600;
 }
 
@@ -205,7 +204,7 @@
     border-radius: 10px;
     font-size: 0.8rem;
     font-weight: 500;
-    padding: 11px 16px;
+    padding: 9px 16px;
     cursor: pointer;
     margin: 0;
     transition: background-color 0.2s ease;
@@ -271,7 +270,7 @@
     color: #FFFFFF;
     font-weight: 600;
     font-size: 0.9rem;
-    padding: 0.8rem 1.25rem;
+    padding: 0.7rem 1.25rem;
     border-radius: 10px;
     border: none;
     transition: background-color 0.2s ease;
@@ -300,50 +299,7 @@
 }
 
 .payment-illustration-img {
-    width: clamp(72px, 22vw, 141px);
+    width: clamp(68px, 16vw, 108px);
     height: auto;
     flex-shrink: 0;
 }
-
-/* satu halaman (tanpa scroll) */
-/* @media (min-width: 992px) and (min-height: 640px) {
-    .payment-main {
-        display: flex;
-        align-items: center;
-        min-height: 0;
-        overflow: hidden;
-        padding-top: clamp(8px, 2vh, 24px) !important;
-        padding-bottom: clamp(8px, 2vh, 24px) !important;
-    }
-
-    .payment-main > .container {
-        display: flex;
-        flex-direction: column;
-        min-height: 0;
-        max-height: 100%;
-    }
-
-    .payment-main .payment-card {
-        min-height: 0;
-        overflow-y: auto;
-        padding: clamp(14px, 2.4vh, 36px) clamp(24px, 3vw, 44px) !important;
-    }
-
-    .payment-main .payment-card .mb-4 { margin-bottom: clamp(8px, 1.8vh, 24px) !important; }
-    .payment-main .payment-card .mt-4 { margin-top: clamp(8px, 1.8vh, 24px) !important; }
-    .payment-main .payment-card .mb-3 { margin-bottom: clamp(6px, 1.2vh, 16px) !important; }
-    .payment-main .payment-card .mb-2 { margin-bottom: clamp(3px, 0.8vh, 8px) !important; }
-    .payment-main .payment-trust { margin-top: clamp(6px, 1.5vh, 20px) !important; }
-    .payment-main .payment-card .btn-link { padding-top: 2px; padding-bottom: 2px; }
-
-    .payment-title { font-size: clamp(1.25rem, 3.4vh, 1.9rem); }
-
-    .payment-total-box { padding: clamp(8px, 1.6vh, 16px) 20px; }
-    .payment-total-value { font-size: clamp(1.2rem, 3vh, 1.6rem); }
-    .payment-bank-card { padding: clamp(8px, 1.4vh, 14px) 16px; }
-
-    .payment-dropzone { padding: clamp(8px, 1.6vh, 18px) 20px; }
-    .payment-dropzone-icon { font-size: clamp(1.5rem, 3.4vh, 2.1rem); margin-bottom: clamp(2px, 0.6vh, 6px); }
-    .payment-choose-btn { padding: clamp(6px, 1.1vh, 9px) 16px; }
-    .payment-submit-btn { padding: clamp(8px, 1.6vh, 13px) 1.25rem; }
-} */

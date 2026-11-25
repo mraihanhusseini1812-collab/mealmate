@@ -119,6 +119,7 @@ $estimatedEndDate = calculateOrderEndDate(
 render('customer/checkout', [
     'title' => 'Checkout Langganan - MealMate',
     'page' => 'checkout',
+    'hideFooter' => true,
     'package' => $package,
     'minStartDate' => $minStartDate,
     'selectedStartDate' => $selectedStartDate,

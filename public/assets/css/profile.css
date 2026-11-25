@@ -204,32 +204,6 @@
     min-width: 80px;
 }
 
-.flash-toast {
-    position: fixed;
-    top: 110px;
-    right: 16px;
-    z-index: 1100;
-    width: min(420px, calc(100vw - 32px));
-    animation: flash-toast-in 0.25s ease-out;
-}
-
-@keyframes flash-toast-in {
-    from {
-        opacity: 0;
-        transform: translateY(-12px);
-    }
-    to {
-        opacity: 1;
-        transform: none;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .flash-toast {
-        animation: none;
-    }
-}
-
 .profile-modal .modal-content {
     border: 0;
     border-radius: 20px;
