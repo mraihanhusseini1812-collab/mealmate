@@ -191,11 +191,71 @@ function cancelCustomerOrder(int $orderId, int $userId): array {
     return ['ok' => true];
 }
 
-function hasOrderReview(int $orderId): bool {
+function buildCustomerOrderFilter(int $userId, string $search = ''): array {
+    $where = 'WHERE o.user_id = :user_id';
+    $params = ['user_id' => $userId];
+
+    $q = trim($search);
+    if ($q !== '') {
+        // "#ORD-001" / "ORD-001" / "001" -> "1"
+        $clean = preg_replace('/^#?(?:ORD)?-?/i', '', $q);
+        $idTerm = ($clean !== '' && ctype_digit($clean)) ? ltrim($clean, '0') : '';
+
+        if ($idTerm !== '') {
+            $where .= ' AND (CAST(o.order_id AS CHAR) LIKE :q_id OR p.package_name LIKE :q_pkg)';
+            $params['q_id'] = '%' . $idTerm . '%';
+        } else {
+            $where .= ' AND p.package_name LIKE :q_pkg';
+        }
+        $params['q_pkg'] = '%' . $q . '%';
+    }
+
+    return [$where, $params];
+}
+
+function countCustomerOrders(int $userId, string $search = ''): int {
     $pdo = getDBConnection();
-    $stmt = $pdo->prepare("SELECT COUNT(*) FROM reviews WHERE order_id = :order_id");
-    $stmt->execute(['order_id' => $orderId]);
-    return (int) $stmt->fetchColumn() > 0;
+    [$where, $params] = buildCustomerOrderFilter($userId, $search);
+    $stmt = $pdo->prepare(
+        "SELECT COUNT(*)
+         FROM orders o
+         JOIN packages p ON p.package_id = o.package_id
+         {$where}"
+    );
+    $stmt->execute($params);
+    return (int) $stmt->fetchColumn();
+}
+
+function getCustomerOrders(int $userId, string $search = '', int $limit = 5, int $offset = 0): array {
+    $pdo = getDBConnection();
+    [$where, $params] = buildCustomerOrderFilter($userId, $search);
+    $stmt = $pdo->prepare(
+        "SELECT o.order_id, o.start_date, o.slot, o.status, o.created_at,
+                p.package_name, p.image AS package_image, p.duration_days, p.applicable_days
+         FROM orders o
+         JOIN packages p ON p.package_id = o.package_id
+         {$where}
+         ORDER BY o.created_at DESC, o.order_id DESC
+         LIMIT :limit OFFSET :offset"
+    );
+    foreach ($params as $key => $val) {
+        $stmt->bindValue(":{$key}", $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
+    }
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->execute();
+    $rows = $stmt->fetchAll();
+
+    foreach ($rows as &$row) {
+        $row['end_date'] = calculateOrderEndDate(
+            $row['start_date'],
+            (int) $row['duration_days'],
+            $row['applicable_days']
+        );
+    }
+    unset($row);
+
+    return $rows;
 }
 
 function createOrderPayment(int $orderId, int $userId, string $proofFilename): array {
