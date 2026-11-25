@@ -191,13 +191,6 @@ function cancelCustomerOrder(int $orderId, int $userId): array {
     return ['ok' => true];
 }
 
-function hasOrderReview(int $orderId): bool {
-    $pdo = getDBConnection();
-    $stmt = $pdo->prepare("SELECT COUNT(*) FROM reviews WHERE order_id = :order_id");
-    $stmt->execute(['order_id' => $orderId]);
-    return (int) $stmt->fetchColumn() > 0;
-}
-
 function buildCustomerOrderFilter(int $userId, string $search = ''): array {
     $where = 'WHERE o.user_id = :user_id';
     $params = ['user_id' => $userId];

@@ -84,7 +84,9 @@ INSERT INTO orders (order_id, user_id, package_id, start_date, slot, delivery_ad
 (2, 3, 3, '2026-10-26', 'Malam', 'Jl. Cempaka No. 31, Batam Center, Kota Batam',                                 'Titip di pos satpam',  185000, 'Selesai',             '2026-10-25 14:20:00'),
 (3, 2, 2, '2026-11-09', 'Siang', 'Jl. Melati No 12, RT 03/RW 05, Kel. Sungai Jawi, Kec. Batam Kota, Kota Batam', NULL,                   150000, 'Aktif',               '2026-11-08 10:30:00'),
 (4, 4, 1, '2026-11-16', 'Pagi',  'Jl. Melati No. 12, Sekupang, Kota Batam',                                      'Tanpa seledri',        125000, 'Menunggu Verifikasi', '2026-11-14 08:45:00'),
-(5, 2, 3, '2026-11-17', 'Siang', 'Jl. Melati No 12, RT 03/RW 05, Kel. Sungai Jawi, Kec. Batam Kota, Kota Batam', NULL,                   185000, 'Belum Dibayar',       '2026-11-14 11:00:00')
+(5, 2, 3, '2026-11-17', 'Siang', 'Jl. Melati No 12, RT 03/RW 05, Kel. Sungai Jawi, Kec. Batam Kota, Kota Batam', NULL,                   185000, 'Belum Dibayar',       '2026-11-14 11:00:00'),
+(6, 3, 2, '2026-10-19', 'Pagi',  'Jl. Cempaka No. 31, Batam Center, Kota Batam',                                 NULL,                   150000, 'Selesai',             '2026-10-17 16:00:00'),
+(7, 2, 1, '2026-10-26', 'Pagi',  'Jl. Melati No 12, RT 03/RW 05, Kel. Sungai Jawi, Kec. Batam Kota, Kota Batam', 'Tanpa sambal',        125000, 'Selesai',             '2026-10-24 08:30:00')
 ON DUPLICATE KEY UPDATE
     status      = VALUES(status),
     total_price = VALUES(total_price);
@@ -94,17 +96,24 @@ INSERT INTO payments (payment_id, order_id, payment_proof, status, rejection_rea
 (1, 1, 'demo-proof-1.jpg', 'Valid', NULL),
 (2, 2, 'demo-proof-2.jpg', 'Valid', NULL),
 (3, 3, 'demo-proof-3.jpg', 'Valid', NULL),
-(4, 4, 'demo-proof-4.jpg', NULL,    NULL)
+(4, 4, 'demo-proof-4.jpg', NULL,    NULL),
+(5, 6, 'demo-proof-6.jpg', 'Valid', NULL),
+(6, 7, 'demo-proof-7.jpg', 'Valid', NULL)
 ON DUPLICATE KEY UPDATE
     status           = VALUES(status),
     rejection_reason = VALUES(rejection_reason);
 
--- 7. Ulasan Demo (untuk pesanan berstatus Selesai)
+-- 7. Ulasan Demo (menu harus termasuk menu yang diterima pada pesanan terkait)
 INSERT INTO reviews (review_id, order_id, menu_id, rating, comment, created_at) VALUES
-(1, 1, 2, 5, 'Ayam bakar madunya empuk banget, bumbunya meresap sampai ke dalam. Pengiriman juga tepat waktu!', '2026-10-24 13:10:00'),
-(2, 1, 5, 4, 'Ikan goreng kuningnya renyah dan sambal terasinya mantap, porsi pas untuk makan siang.',          '2026-10-24 13:12:00'),
-(3, 2, 3, 5, 'Tumis buncis sapinya segar dan rasanya seperti masakan rumah sendiri. Recommended!',              '2026-11-02 19:30:00'),
-(4, 2, 8, 5, 'Rendang sapinya juara, dagingnya empuk dan rempahnya terasa sekali.',                             '2026-11-02 19:32:00')
+(1, 1, 2,  5, 'Ayam bakar madunya empuk banget, bumbunya meresap sampai ke dalam. Pengiriman juga tepat waktu!', '2026-10-24 13:10:00'),
+(2, 1, 5,  4, 'Ikan goreng kuningnya renyah dan sambal terasinya mantap, porsi pas untuk makan siang.',          '2026-10-24 13:12:00'),
+(3, 2, 3,  5, 'Tumis buncis sapinya segar dan rasanya seperti masakan rumah sendiri. Recommended!',              '2026-11-02 19:30:00'),
+(4, 2, 21, 5, 'Bistik sapinya empuk, saus kecap bawangnya pas dan kentang gorengnya renyah.',                   '2026-11-02 19:32:00'),
+(5, 7, 1,  4, 'Nasi uduknya gurih dan sambal kacangnya pas untuk sarapan.',                                     '2026-11-02 08:10:00'),
+(6, 7, 4,  2, 'Kuah lontong sayurnya agak hambar.',                                                             '2026-11-02 08:12:00'),
+(7, 7, 10, 3, NULL,                                                                                              '2026-11-02 08:13:00')
 ON DUPLICATE KEY UPDATE
-    rating  = VALUES(rating),
-    comment = VALUES(comment);
+    order_id = VALUES(order_id),
+    menu_id  = VALUES(menu_id),
+    rating   = VALUES(rating),
+    comment  = VALUES(comment);

@@ -182,6 +182,13 @@ $backUrl = file_exists(__DIR__ . '/../../controllers/orders.php') ? 'index.php?p
                             <span>Berikan Ulasan</span>
                         </a>
                     </div>
+                <?php elseif ($status === 'Selesai' && $hasReviews): ?>
+                    <div class="mt-4">
+                        <a href="index.php?page=review&order_id=<?= (int) $order['order_id'] ?>" class="btn checkout-submit-btn w-100 d-flex align-items-center justify-content-center gap-2">
+                            <i class="bi bi-chat-square-heart"></i>
+                            <span>Lihat Ulasan Saya</span>
+                        </a>
+                    </div>
                 <?php endif; ?>
             </div>
         </div>
