@@ -1002,3 +1002,173 @@
         animation: none;
     }
 }
+
+/* ulasan pelanggan */
+.admin-review-select {
+    flex: 0 0 auto;
+    width: 200px;
+}
+
+@media (max-width: 767.98px) {
+    .admin-review-select {
+        width: 100%;
+    }
+}
+
+.admin-sort-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.admin-sort-link i {
+    font-size: 11px;
+    color: #9EA4A0;
+}
+
+.admin-sort-link:hover,
+.admin-sort-link.active {
+    color: #13523C;
+}
+
+.admin-sort-link.active i {
+    color: #13523C;
+}
+
+.admin-rev-stars {
+    color: #F0B866;
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.admin-rev-stars .bi-star {
+    color: #D9D9D9;
+}
+
+.admin-review-comment {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.45;
+    color: #43535A;
+    overflow-wrap: anywhere;
+}
+
+@media (min-width: 768px) {
+    .admin-responsive-reviews {
+        table-layout: fixed;
+        width: 100%;
+    }
+
+    .admin-responsive-reviews th:nth-child(1) { width: 108px; } /* tanggal */
+    .admin-responsive-reviews th:nth-child(2) { width: 22%; }   /* nama */
+    .admin-responsive-reviews th:nth-child(3) { width: 18%; }   /* menu */
+    .admin-responsive-reviews th:nth-child(4) { width: 105px; } /* rating */
+
+    .admin-rev-date-cell > div:first-child {
+        white-space: nowrap;
+        font-size: 13px;
+    }
+
+    .admin-rev-cust-cell .min-w-0,
+    .admin-rev-menu-cell > div:first-child {
+        overflow: hidden;
+    }
+
+    .admin-rev-menu-name {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .admin-responsive-reviews thead {
+        display: none;
+    }
+
+    .admin-responsive-reviews tbody,
+    .admin-responsive-reviews tr,
+    .admin-responsive-reviews td {
+        display: block;
+        width: 100%;
+    }
+
+    .admin-responsive-reviews tr {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 8px 12px;
+        padding: 14px;
+        margin-bottom: 12px;
+        border: 1px solid #EFECE4;
+        border-radius: 14px;
+        background-color: #ffffff;
+    }
+
+    .admin-responsive-reviews td {
+        padding: 0;
+        border: none;
+        background-color: transparent;
+    }
+
+    /* nama */
+    .admin-rev-cust-cell {
+        grid-column: 1;
+        grid-row: 1;
+        min-width: 0;
+    }
+
+    .admin-table .admin-rev-menu-cell {
+        display: contents !important;
+    }
+
+    /* id-order */
+    .admin-rev-menu-cell > div:last-child {
+        grid-column: 2;
+        grid-row: 1;
+        align-self: start;
+        justify-self: end;
+        font-size: 12px !important;
+        font-weight: 500;
+        white-space: nowrap;
+    }
+
+    /* date */
+    .admin-rev-date-cell {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        display: flex !important;
+        align-items: baseline;
+        gap: 8px;
+        font-size: 12.5px;
+    }
+
+    /* menu+rating */
+    .admin-rev-menu-cell > div:first-child {
+        grid-column: 1 / -1;
+        grid-row: 3;
+        font-size: 13.5px;
+    }
+
+    .admin-rev-menu-name {
+        flex: 0 1 auto;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .admin-table .admin-rev-comment-cell {
+        grid-column: 1 / -1;
+        grid-row: 4;
+        display: block !important;
+        font-size: 13px;
+        text-align: left;
+    }
+}

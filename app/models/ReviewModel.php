@@ -72,3 +72,92 @@ function createReviews(int $orderId, array $items): array {
         return ['ok' => false, 'message' => 'Ulasan gagal disimpan. Silakan coba lagi.'];
     }
 }
+
+function getAdminReviewSortMap(): array {
+    return [
+        'date' => 'r.created_at',
+        'customer' => 'u.name',
+        'menu' => 'm.menu_name',
+        'rating' => 'r.rating',
+        'comment' => 'r.comment',
+    ];
+}
+
+function buildAdminReviewFilter(string $search = '', int $rating = 0): array {
+    $conditions = [];
+    $params = [];
+
+    if ($rating >= 1 && $rating <= 5) {
+        $conditions[] = 'r.rating = :rating';
+        $params['rating'] = $rating;
+    }
+
+    $q = trim($search);
+    if ($q !== '') {
+        $like = '%' . $q . '%';
+        $conditions[] = '(u.name LIKE :q_name OR m.menu_name LIKE :q_menu OR r.comment LIKE :q_comment)';
+        $params['q_name'] = $like;
+        $params['q_menu'] = $like;
+        $params['q_comment'] = $like;
+    }
+
+    if (empty($conditions)) {
+        return ['', []];
+    }
+
+    return ['WHERE ' . implode(' AND ', $conditions), $params];
+}
+
+function countAdminReviews(string $search = '', int $rating = 0): int {
+    $pdo = getDBConnection();
+    [$where, $params] = buildAdminReviewFilter($search, $rating);
+    $stmt = $pdo->prepare(
+        "SELECT COUNT(*)
+         FROM reviews r
+         JOIN orders o ON o.order_id = r.order_id
+         JOIN users u ON u.user_id = o.user_id
+         JOIN menus m ON m.menu_id = r.menu_id
+         {$where}"
+    );
+    foreach ($params as $key => $val) {
+        $stmt->bindValue(":{$key}", $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
+    }
+    $stmt->execute();
+    return (int) $stmt->fetchColumn();
+}
+
+function getAdminReviews(
+    string $search = '',
+    int $rating = 0,
+    string $sort = 'date',
+    string $dir = 'desc',
+    int $limit = 10,
+    int $offset = 0
+): array {
+    $pdo = getDBConnection();
+    [$where, $params] = buildAdminReviewFilter($search, $rating);
+
+    $sortMap = getAdminReviewSortMap();
+    $orderColumn = $sortMap[$sort] ?? $sortMap['date'];
+    $orderDir = (strtolower($dir) === 'asc') ? 'ASC' : 'DESC';
+
+    $stmt = $pdo->prepare(
+        "SELECT r.review_id, r.order_id, r.rating, r.comment, r.created_at,
+                u.user_id, u.name AS customer_name,
+                m.menu_name
+         FROM reviews r
+         JOIN orders o ON o.order_id = r.order_id
+         JOIN users u ON u.user_id = o.user_id
+         JOIN menus m ON m.menu_id = r.menu_id
+         {$where}
+         ORDER BY {$orderColumn} {$orderDir}, r.review_id DESC
+         LIMIT :limit OFFSET :offset"
+    );
+    foreach ($params as $key => $val) {
+        $stmt->bindValue(":{$key}", $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
+    }
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchAll();
+}
