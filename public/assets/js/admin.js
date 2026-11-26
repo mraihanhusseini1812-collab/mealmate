@@ -224,6 +224,25 @@ window.addEventListener('DOMContentLoaded', function () {
         new bootstrap.Modal(modalEl).show();
     });
 
+    document.querySelectorAll('.admin-period-select').forEach(function (selectEl) {
+        selectEl.addEventListener('change', function () {
+            var targetId = selectEl.getAttribute('data-custom-target');
+            var customGroup = targetId ? document.getElementById(targetId) : null;
+            if (selectEl.value === 'custom') {
+                if (customGroup) {
+                    customGroup.classList.remove('d-none');
+                }
+            } else {
+                if (customGroup) {
+                    customGroup.classList.add('d-none');
+                }
+                if (selectEl.form) {
+                    selectEl.form.submit();
+                }
+            }
+        });
+    });
+
     var input = document.getElementById('adminGlobalSearchInput');
     var dropdown = document.getElementById('adminGlobalSearchDropdown');
     var container = document.getElementById('adminGlobalSearchContainer');

@@ -1002,3 +1002,170 @@
         animation: none;
     }
 }
+
+.admin-kpi-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background-color: #E3EFE6;
+    color: #1F5A3F;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.admin-kpi-label {
+    font-size: 0.78rem;
+    color: #7D8580;
+    font-weight: 500;
+}
+
+.admin-kpi-value {
+    font-size: clamp(1.45rem, 2.2vw, 1.95rem);
+    font-weight: 800;
+    color: #2B1E16;
+    line-height: 1.25;
+}
+
+.admin-kpi-sub {
+    font-size: 0.75rem;
+    margin-top: 2px;
+}
+
+.admin-section-heading {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #134A32;
+}
+
+.admin-section-subtext {
+    font-size: 0.74rem;
+    color: #8C948F;
+}
+
+.admin-link-sm {
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: #1F5A3F;
+}
+
+.admin-link-sm:hover {
+    color: #143E2B;
+    text-decoration: underline !important;
+}
+
+.admin-period-select {
+    min-width: 155px;
+    border-radius: 999px;
+    border: 1px solid #DFDCD3;
+    padding: 6px 32px 6px 14px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #1E2923;
+    background-color: #FFFFFF;
+}
+
+.admin-period-date {
+    border-radius: 10px;
+    border: 1px solid #DFDCD3;
+    font-size: 0.8rem;
+}
+
+.admin-export-btn {
+    border-radius: 10px;
+    border: 1.5px solid #1F5A3F;
+    background-color: #FFFFFF;
+    color: #1F5A3F;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 6px 14px;
+}
+
+.admin-export-btn:hover,
+.admin-export-btn:focus {
+    background-color: #1F5A3F;
+    color: #FFFFFF;
+}
+
+.admin-chart-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.admin-trend-svg {
+    width: 100%;
+    height: auto;
+    min-width: 340px;
+    display: block;
+}
+
+.admin-chart-axis-text {
+    fill: #787F7B;
+    font-size: 11.5px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.admin-chart-dot {
+    cursor: pointer;
+    transition: r 0.15s ease;
+}
+
+.admin-chart-dot:hover {
+    r: 6.5px;
+}
+
+.admin-review-author {
+    font-size: 0.86rem;
+    color: #1E2923;
+}
+
+.admin-review-stars {
+    color: #F2B01E;
+    font-size: 0.78rem;
+    display: inline-flex;
+    gap: 2px;
+}
+
+.admin-review-comment {
+    font-size: 0.78rem;
+    color: #5C645F;
+    line-height: 1.45;
+}
+
+.admin-review-meta {
+    font-size: 0.7rem;
+    color: #939B96;
+}
+
+.report-status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.74rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.report-badge-success {
+    background-color: #1F7A4C;
+    color: #FFFFFF;
+}
+
+.report-badge-warning {
+    background-color: #F8ECC9;
+    color: #8C6200;
+}
+
+.report-badge-unpaid {
+    background-color: #EFECE6;
+    color: #5C645F;
+}
+
+.report-badge-danger {
+    background-color: #FADBD8;
+    color: #A93226;
+}
