@@ -46,6 +46,11 @@ $loggedInUser = currentUser();
                                 </a>
                             </li>
                             <li>
+                                <a class="dropdown-item py-2" href="index.php?page=change-password">
+                                    <i class="bi bi-key me-2 text-success d-inline-block" style="transform: rotate(90deg)"></i>Ubah Password
+                                </a>
+                            </li>
+                            <li>
                                 <a class="dropdown-item py-2" href="index.php?page=orders">
                                     <i class="bi bi-bag-check me-2 text-success"></i>Riwayat Pesanan
                                 </a>

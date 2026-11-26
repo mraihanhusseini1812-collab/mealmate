@@ -45,15 +45,34 @@ function validateAndUploadImage(
         ];
     }
 
-    if (!is_dir($targetDir)) {
-        mkdir($targetDir, 0775, true);
+    $normalizedDir = rtrim($targetDir, "/\\");
+    if (!is_dir($normalizedDir) && !mkdir($normalizedDir, 0775, true) && !is_dir($normalizedDir)) {
+        error_log("Upload error: gagal membuat direktori tujuan '{$normalizedDir}'.");
+        return [
+            'ok' => false,
+            'filename' => null,
+            'error' => 'Gagal menyimpan berkas ke server. Silakan coba lagi.',
+        ];
+    }
+
+    $resolvedDir = realpath($normalizedDir) ?: $normalizedDir;
+    if (!is_writable($resolvedDir)) {
+        error_log("Upload error: direktori tujuan '{$resolvedDir}' tidak dapat ditulisi (permission denied).");
+        return [
+            'ok' => false,
+            'filename' => null,
+            'error' => 'Gagal menyimpan berkas ke server. Silakan coba lagi.',
+        ];
     }
 
     $ext = $allowedMimes[$mimeType];
     $fileName = $prefix . date('YmdHis') . '_' . bin2hex(random_bytes(4)) . '.' . $ext;
-    $destPath = rtrim($targetDir, '/') . '/' . $fileName;
+    $destPath = rtrim($resolvedDir, "/\\") . DIRECTORY_SEPARATOR . $fileName;
 
     if (!move_uploaded_file($file['tmp_name'], $destPath)) {
+        $lastErr = error_get_last();
+        $errDetail = $lastErr['message'] ?? 'unknown error';
+        error_log("Upload error: move_uploaded_file gagal dari '{$file['tmp_name']}' ke '{$destPath}' ({$errDetail}).");
         return [
             'ok' => false,
             'filename' => null,

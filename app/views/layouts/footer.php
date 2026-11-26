@@ -11,8 +11,8 @@
             <div class="menu-footer-container d-grid d-md-flex justify-content-md-start">
                 <div class="menu-footer">
                     <h5 class="mb-3">Menu</h5>
-                    <p><a href="index.php?page=menu" class="text-decoration-none">Menu Hari Ini</a></p>
-                    <p><a href="index.php?page=menu" class="text-decoration-none">Menu Mingguan</a></p>
+                    <p><a href="index.php?page=menu#daily-menus-section" class="text-decoration-none">Menu Hari Ini</a></p>
+                    <p><a href="index.php?page=menu&mode=weekly#daily-menus-section" class="text-decoration-none">Menu Mingguan</a></p>
                     <p><a href="index.php?page=menu#packages-section" class="text-decoration-none">Paket Langganan</a></p>
                 </div>
 
@@ -54,16 +54,17 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./assets/js/menu-toggle.js"></script>
+        <script src="./assets/js/flash-toast.js"></script>
     <?php $currentPage = $_GET['page'] ?? ''; ?>
     <?php if ($currentPage === 'checkout'): ?>
         <script src="./assets/js/checkout.js"></script>
     <?php elseif ($currentPage === 'profile'): ?>
-        <script src="./assets/js/flash-toast.js"></script>
         <script src="./assets/js/profile.js"></script>
     <?php elseif ($currentPage === 'payment'): ?>
         <script src="./assets/js/payment.js"></script>
     <?php elseif ($currentPage === 'review'): ?>
         <script src="./assets/js/review.js"></script>
     <?php endif; ?>
+</body>
 </body>
 </html>

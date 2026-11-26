@@ -17,14 +17,14 @@
 }
 
 .step-circle {
-    width: 34px;
-    height: 34px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     border: 1.5px solid #9AA59E;
     background-color: transparent;
     color: #6E7B73;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -38,7 +38,7 @@
 }
 
 .step-label {
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     font-weight: 600;
     color: #7D8981;
     white-space: nowrap;
@@ -53,7 +53,7 @@
     flex: 1;
     height: 1.5px;
     background-color: #B4BDB7;
-    margin: 0 12px 22px 12px;
+    margin: 0 12px 18px 12px;
     min-width: 50px;
 }
 
@@ -86,48 +86,48 @@
 }
 
 .checkout-header-icon {
-    width: 48px;
-    height: 48px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     background-color: #EAF2EC;
     color: #1F5A3F;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.35rem;
+    font-size: 1.2rem;
     flex-shrink: 0;
 }
 
 .checkout-section-title {
-    font-size: 1.45rem;
+    font-size: 1.3rem;
     font-weight: 700;
     color: #1F5A3F;
 }
 
 .checkout-section-subtitle {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     color: #6B726E;
-    line-height: 1.45;
+    line-height: 1.4;
 }
 
 .checkout-field-label {
-    font-size: 0.98rem;
+    font-size: 0.94rem;
     font-weight: 700;
     color: #1F5A3F;
-    margin-bottom: 2px;
+    margin-bottom: 1px;
 }
 
 .checkout-field-hint {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     color: #6C757D;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .checkout-input {
     border-radius: 12px;
     border: 1px solid #E1E5E2;
-    padding: 0.7rem 0.95rem;
-    font-size: 0.92rem;
+    padding: 0.55rem 0.9rem;
+    font-size: 0.9rem;
     color: #212529;
 }
 
@@ -137,7 +137,7 @@
 }
 
 .checkout-textarea {
-    padding-bottom: 1.8rem;
+    padding-bottom: 1.6rem;
 }
 
 .checkout-char-counter {
@@ -150,8 +150,8 @@
 }
 
 .checkout-pkg-thumb {
-    width: 96px;
-    height: 96px;
+    width: 82px;
+    height: 82px;
     border-radius: 14px;
     object-fit: cover;
     flex-shrink: 0;
@@ -195,19 +195,19 @@
 }
 
 .enddate-value {
-    font-size: 1.4rem;
+    font-size: 1.25rem;
     font-weight: 700;
     color: #13523C;
 }
 
 .checkout-total-label {
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 700;
     color: #13523C;
 }
 
 .checkout-total-value {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: #13523C;
 }
@@ -216,8 +216,8 @@
     background-color: #C86446;
     color: #FFFFFF;
     font-weight: 600;
-    font-size: 0.98rem;
-    padding: 0.8rem 1.25rem;
+    font-size: 0.95rem;
+    padding: 0.7rem 1.2rem;
     border-radius: 12px;
     border: none;
     transition: background-color 0.2s ease;
@@ -229,7 +229,7 @@
 }
 
 .order-detail-card {
-    max-width: 780px;
+    max-width: 740px;
 }
 
 .order-back-link {
@@ -237,28 +237,28 @@
 }
 
 .order-back-link i {
-    font-size: 1.4rem;
+    font-size: 1.25rem;
 }
 
 .order-back-link h1 {
-    font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+    font-size: clamp(1.25rem, 2vw, 1.65rem);
     font-weight: 700;
     color: #13523C;
 }
 
 .order-status-banner {
-    border-radius: 16px;
+    border-radius: 14px;
     background-color: #EFF4F0;
 }
 
 .status-banner-icon {
-    width: 48px;
-    height: 48px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.35rem;
+    font-size: 1.2rem;
     color: #FFFFFF;
 }
 
@@ -314,9 +314,9 @@
 }
 
 .order-detail-pkg-img {
-    width: 88px;
-    height: 88px;
-    border-radius: 14px;
+    width: 74px;
+    height: 74px;
+    border-radius: 12px;
     object-fit: cover;
     flex-shrink: 0;
 }
@@ -354,5 +354,12 @@
 @media (min-width: 768px) {
     .border-md-end {
         border-right: 1px solid #E9ECEA;
+    }
+}
+
+@media (min-width: 992px) {
+    .checkout-sticky-card {
+        position: sticky;
+        top: 16px;
     }
 }

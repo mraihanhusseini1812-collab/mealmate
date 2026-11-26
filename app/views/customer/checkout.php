@@ -8,9 +8,9 @@ $slotOptions = [
     'Malam' => 'Malam (17.00 - 20.00 WIB)',
 ];
 ?>
-<main class="checkout-page py-4 py-lg-5">
+<main class="checkout-page py-3">
     <div class="container">
-        <div class="checkout-stepper d-flex align-items-center justify-content-center mb-4 mb-lg-5">
+        <div class="checkout-stepper d-flex align-items-center justify-content-center mb-3">
             <div class="step-item completed">
                 <div class="step-circle"><i class="bi bi-check-lg"></i></div>
                 <span class="step-label">Pilih Paket</span>
@@ -32,8 +32,8 @@ $slotOptions = [
 
             <div class="row g-4 align-items-start">
                 <div class="col-12 col-lg-7">
-                    <div class="checkout-card p-4 p-md-5">
-                        <div class="d-flex align-items-start gap-3 mb-4">
+                    <div class="checkout-card p-3 p-md-4">
+                        <div class="d-flex align-items-start gap-3 mb-3">
                             <div class="checkout-header-icon">
                                 <i class="bi bi-truck"></i>
                             </div>
@@ -45,7 +45,7 @@ $slotOptions = [
                             </div>
                         </div>
 
-                        <div class="mb-4">
+                        <div class="mb-3">
                             <label for="checkoutStartDate" class="checkout-field-label d-flex align-items-center gap-2">
                                 <i class="bi bi-calendar-event text-success"></i>
                                 <span>Tanggal Mulai <span class="text-danger">*</span></span>
@@ -72,7 +72,7 @@ $slotOptions = [
                             </div>
                         </div>
 
-                        <div class="mb-4">
+                        <div class="mb-3">
                             <label for="checkoutSlot" class="checkout-field-label d-flex align-items-center gap-2">
                                 <i class="bi bi-clock text-success"></i>
                                 <span>Slot Antar <span class="text-danger">*</span></span>
@@ -95,7 +95,7 @@ $slotOptions = [
                             <?php endif; ?>
                         </div>
 
-                        <div class="mb-4">
+                        <div class="mb-3">
                             <label for="checkoutAddress" class="checkout-field-label d-flex align-items-center gap-2">
                                 <i class="bi bi-geo-alt text-success"></i>
                                 <span>Alamat Pengantaran <span class="text-danger">*</span></span>
@@ -105,7 +105,7 @@ $slotOptions = [
                                 <textarea
                                     id="checkoutAddress"
                                     name="delivery_address"
-                                    rows="4"
+                                    rows="3"
                                     maxlength="500"
                                     class="form-control checkout-input checkout-textarea <?= isset($errors['delivery_address']) ? 'is-invalid' : '' ?>"
                                     placeholder="Contoh: Jl. Melati No. 12, RT 03/RW 04, Kec. Coblong, Kota Bandung (Pagar hitam)"
@@ -118,7 +118,7 @@ $slotOptions = [
                             <?php endif; ?>
                         </div>
 
-                        <div class="mb-2">
+                        <div class="mb-0">
                             <label for="checkoutNotes" class="checkout-field-label d-flex align-items-center gap-2">
                                 <i class="bi bi-journal-text text-success"></i>
                                 <span>Catatan Tambahan <span class="text-muted fw-normal">(Opsional)</span></span>
@@ -127,7 +127,7 @@ $slotOptions = [
                             <textarea
                                 id="checkoutNotes"
                                 name="notes"
-                                rows="2"
+                                rows="1"
                                 maxlength="500"
                                 class="form-control checkout-input <?= isset($errors['notes']) ? 'is-invalid' : '' ?>"
                                 placeholder="Contoh: Tidak pakai sambal, titip di resepsionis lobi"
@@ -140,13 +140,13 @@ $slotOptions = [
                 </div>
 
                 <div class="col-12 col-lg-5">
-                    <div class="checkout-summary-card">
+                    <div class="checkout-summary-card checkout-sticky-card">
                         <div class="checkout-summary-header px-4 py-3">
                             <h3 class="mb-0">Order Summary</h3>
                         </div>
 
-                        <div class="checkout-summary-body p-4">
-                            <div class="d-flex gap-3 align-items-start mb-4">
+                        <div class="checkout-summary-body p-3 p-md-4">
+                            <div class="d-flex gap-3 align-items-start mb-3">
                                 <img
                                     src="<?= htmlspecialchars($packageImg) ?>"
                                     alt="<?= htmlspecialchars($package['package_name']) ?>"
@@ -165,7 +165,7 @@ $slotOptions = [
                                 </div>
                             </div>
 
-                            <div class="checkout-enddate-box p-3 mb-4">
+                            <div class="checkout-enddate-box p-3 mb-3">
                                 <div class="d-flex align-items-center gap-2 mb-1">
                                     <i class="bi bi-calendar-check text-success"></i>
                                     <span class="enddate-label">Tanggal Selesai</span>
@@ -175,16 +175,16 @@ $slotOptions = [
                                 </div>
                             </div>
 
-                            <div class="checkout-price-breakdown mb-4">
+                            <div class="checkout-price-breakdown mb-3">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                     <span class="text-muted">Subtotal (<?= htmlspecialchars($package['package_name']) ?>)</span>
                                     <span class="fw-semibold text-dark"><?= formatRupiah((int) $package['price']) ?></span>
                                 </div>
-                                <div class="d-flex justify-content-between align-items-center pb-3 border-bottom">
+                                <div class="d-flex justify-content-between align-items-center pb-2 border-bottom">
                                     <span class="text-muted">Ongkos Kirim</span>
                                     <span class="fw-semibold text-success">Gratis (Rp 0)</span>
                                 </div>
-                                <div class="d-flex justify-content-between align-items-center pt-3">
+                                <div class="d-flex justify-content-between align-items-center pt-2">
                                     <span class="checkout-total-label">Total Pembayaran</span>
                                     <span class="checkout-total-value"><?= formatRupiah((int) $package['price']) ?></span>
                                 </div>
@@ -195,7 +195,7 @@ $slotOptions = [
                                 <span>Bayar &amp; Unggah Bukti</span>
                             </button>
 
-                            <a href="index.php?page=menu#packages-section" class="btn btn-link text-muted text-decoration-none w-100 mt-2 small">
+                            <a href="index.php?page=menu#packages-section" class="btn btn-link text-muted text-decoration-none w-100 mt-1 pb-0 small">
                                 Kembali ke Pilihan Paket
                             </a>
                         </div>

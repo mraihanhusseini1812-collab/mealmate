@@ -90,37 +90,102 @@
     width: 44%;
 }
 
+.dmc-2 .menu-mode-btn {
+    max-width: 250px;
+    width: 100%;
+    border-radius: 100px;
+    border: none;
+    font-weight: 500;
+    transition: background-color 0.28s cubic-bezier(0.4, 0, 0.2, 1), color 0.28s ease, box-shadow 0.28s ease, transform 0.18s ease;
+}
+
 .dmc-2 .active {
     max-width: 250px;
     width: 100%;
     border-radius: 100px;
     background-color: #0F4D3A;
-    color: #fff;    
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(15, 77, 58, 0.18);
 }
 
+.dmc-2 .non-active {
+    color: #3D4540;
+}
 
-/* ini radio di desktop */
+.dmc-2 .non-active:hover {
+    background-color: rgba(15, 77, 58, 0.08);
+    color: #0F4D3A;
+}
+
 #weekly-selector-container {
     max-width: 97%;
     width: 100%;
+}
+
+.weekly-selector-collapse {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    margin-top: 0 !important;
+    pointer-events: none;
+    transition: max-height 0.32s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, margin-top 0.28s ease;
+}
+
+.weekly-selector-collapse.is-open {
+    max-height: 120px;
+    opacity: 1;
+    margin-top: 1rem !important;
+    pointer-events: auto;
 }
 
 #weekly-selector-container .btn-check:checked + .btn {
     background-color: #0F4D3A !important;
     color: #ffffff !important;
     border-color: #0F4D3A !important;
+    box-shadow: 0 3px 10px rgba(15, 77, 58, 0.18);
 }
 
 #weekly-selector-container .btn {
     background-color: #fff;
     color: #000;
-    border-color: #000;
-    max-width: 90px;
+    border-color: #D5D2C8;
+    max-width: 96px;
     width: 100%;
+    transition: background-color 0.22s ease, color 0.22s ease, border-color 0.22s ease, transform 0.18s ease, box-shadow 0.22s ease;
+}
+
+#weekly-selector-container .btn:hover {
+    border-color: #0F4D3A;
+    color: #0F4D3A;
+}
+
+.dmc-1 {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.dmc-1.is-switching {
+    opacity: 0.35;
+    transform: translateY(3px);
 }
 
 .dmc-3 {
     width: 100%;
+    min-height: 360px;
+}
+
+.menu-card-animate {
+    animation: menuCardFadeIn 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes menuCardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.985);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .dmc-3 .badge-slot {

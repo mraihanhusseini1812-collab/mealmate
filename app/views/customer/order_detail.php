@@ -40,7 +40,7 @@ $statusBannerMap = [
         'theme' => 'rejected',
         'icon' => 'bi-exclamation-triangle',
         'title' => 'Ditolak',
-        'desc' => 'Bukti pembayaran Anda ditolak oleh Admin. Silakan periksa catatan penolakan di bawah.',
+        'desc' => 'Bukti pembayaran Anda ditolak oleh Admin. Silakan periksa catatan penolakan di bawah dan buat pesanan baru.',
     ],
     'Dibatalkan' => [
         'theme' => 'cancelled',
@@ -54,17 +54,17 @@ $createdAtTs = strtotime((string) $order['created_at']);
 $createdAtFormatted = $createdAtTs ? formatDateIndo(date('Y-m-d', $createdAtTs), true) . ', ' . date('H:i', $createdAtTs) : $order['created_at'];
 $backUrl = file_exists(__DIR__ . '/../../controllers/orders.php') ? 'index.php?page=orders' : 'index.php?page=menu#packages-section';
 ?>
-<main class="order-detail-page py-4 py-lg-5">
+<main class="order-detail-page py-3">
     <div class="container">
-        <div class="order-detail-top mb-4">
-            <a href="<?= htmlspecialchars($backUrl) ?>" class="order-back-link text-decoration-none d-inline-flex align-items-center gap-3">
+        <div class="order-detail-top mb-3">
+            <a href="<?= htmlspecialchars($backUrl) ?>" class="order-back-link text-decoration-none d-inline-flex align-items-center gap-2">
                 <i class="bi bi-chevron-left"></i>
                 <h1 class="mb-0">Detail Pesanan <?= htmlspecialchars($orderCode) ?></h1>
             </a>
         </div>
 
-        <div class="order-detail-card mx-auto p-3 p-md-4 p-lg-5">
-            <div class="order-status-banner theme-<?= htmlspecialchars($banner['theme']) ?> p-3 p-md-4 mb-4 d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+        <div class="order-detail-card mx-auto p-3 p-md-4">
+            <div class="order-status-banner theme-<?= htmlspecialchars($banner['theme']) ?> p-3 mb-3 d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
                 <div class="d-flex align-items-center gap-3">
                     <div class="status-banner-icon flex-shrink-0">
                         <i class="bi <?= htmlspecialchars($banner['icon']) ?>"></i>
@@ -85,8 +85,8 @@ $backUrl = file_exists(__DIR__ . '/../../controllers/orders.php') ? 'index.php?p
                 </div>
             </div>
 
-            <div class="pb-4 mb-4 border-bottom">
-                <div class="d-flex align-items-center gap-2 mb-3">
+            <div class="pb-3 mb-3 border-bottom">
+                <div class="d-flex align-items-center gap-2 mb-2">
                     <i class="bi bi-calendar2-range text-success fs-5"></i>
                     <h3 class="order-subsection-title mb-0">Detail Pesanan</h3>
                 </div>
@@ -99,7 +99,7 @@ $backUrl = file_exists(__DIR__ . '/../../controllers/orders.php') ? 'index.php?p
                     >
                     <div>
                         <h4 class="checkout-pkg-title mb-1"><?= htmlspecialchars($order['package_name']) ?></h4>
-                        <div class="d-flex flex-wrap gap-2 mb-2">
+                        <div class="d-flex flex-wrap gap-2 mb-1">
                             <span class="checkout-pkg-badge"><?= (int) $order['duration_days'] ?> hari</span>
                             <span class="checkout-pkg-badge"><?= htmlspecialchars(str_replace('-', ' - ', $order['applicable_days'])) ?></span>
                         </div>
@@ -108,17 +108,17 @@ $backUrl = file_exists(__DIR__ . '/../../controllers/orders.php') ? 'index.php?p
                 </div>
             </div>
 
-            <div class="row g-4 pb-4 mb-4 border-bottom">
+            <div class="row g-3 pb-3 mb-3 border-bottom">
                 <div class="col-12 col-md-5 border-md-end">
                     <div class="d-flex align-items-start gap-2">
                         <i class="bi bi-clock text-success fs-5 mt-1"></i>
                         <div>
-                            <h4 class="order-info-heading mb-2">Jadwal Slot &amp; Periode</h4>
-                            <span class="order-slot-pill mb-2 d-inline-flex align-items-center gap-1">
+                            <h4 class="order-info-heading mb-1">Jadwal Slot &amp; Periode</h4>
+                            <span class="order-slot-pill mb-1 d-inline-flex align-items-center gap-1">
                                 <i class="bi bi-sun"></i>
                                 <span><?= htmlspecialchars($order['slot']) ?></span>
                             </span>
-                            <p class="text-muted small mb-2"><?= htmlspecialchars($slotTimeText) ?></p>
+                            <p class="text-muted small mb-1"><?= htmlspecialchars($slotTimeText) ?></p>
                             <div class="small text-dark">
                                 <div><strong>Mulai:</strong> <?= htmlspecialchars(formatDateIndo($order['start_date'])) ?></div>
                                 <div><strong>Selesai:</strong> <?= htmlspecialchars(formatDateIndo($order['end_date'])) ?></div>
@@ -133,9 +133,9 @@ $backUrl = file_exists(__DIR__ . '/../../controllers/orders.php') ? 'index.php?p
                         <div>
                             <h4 class="order-info-heading mb-1">Alamat Pengantaran</h4>
                             <p class="fw-semibold text-success mb-1"><?= htmlspecialchars($order['customer_name']) ?> (<?= htmlspecialchars($order['customer_phone']) ?>)</p>
-                            <p class="order-address-text mb-2"><?= nl2br(htmlspecialchars($order['delivery_address'])) ?></p>
+                            <p class="order-address-text mb-1"><?= nl2br(htmlspecialchars($order['delivery_address'])) ?></p>
                             <?php if (!empty($order['notes'])): ?>
-                                <div class="small text-muted bg-light rounded-3 p-2 border">
+                                <div class="small text-muted bg-light rounded-3 px-2 py-1 border mt-1">
                                     <strong>Catatan:</strong> <?= htmlspecialchars($order['notes']) ?>
                                 </div>
                             <?php endif; ?>
@@ -144,14 +144,14 @@ $backUrl = file_exists(__DIR__ . '/../../controllers/orders.php') ? 'index.php?p
                 </div>
             </div>
 
-            <div class="order-payment-box p-3 p-md-4 rounded-4">
-                <h3 class="order-subsection-title mb-3">Rincian Pembayaran</h3>
+            <div class="order-payment-box p-3 rounded-4">
+                <h3 class="order-subsection-title mb-2">Rincian Pembayaran</h3>
 
-                <div class="d-flex justify-content-between align-items-center mb-2 small">
+                <div class="d-flex justify-content-between align-items-center mb-1 small">
                     <span class="text-muted">Subtotal (<?= htmlspecialchars($order['package_name']) ?>)</span>
                     <span class="fw-semibold text-dark"><?= formatRupiah((int) $order['total_price']) ?></span>
                 </div>
-                <div class="d-flex justify-content-between align-items-center pb-3 mb-3 border-bottom small">
+                <div class="d-flex justify-content-between align-items-center pb-2 mb-2 border-bottom small">
                     <span class="text-muted">Ongkos Kirim</span>
                     <span class="fw-semibold text-success">Gratis (Rp 0)</span>
                 </div>
@@ -161,7 +161,7 @@ $backUrl = file_exists(__DIR__ . '/../../controllers/orders.php') ? 'index.php?p
                 </div>
 
                 <?php if ($isUnpaid): ?>
-                    <div class="d-flex flex-column flex-sm-row gap-3 mt-4">
+                    <div class="d-flex flex-column flex-sm-row gap-2 mt-3">
                         <a href="index.php?page=payment&order_id=<?= (int) $order['order_id'] ?>" class="btn checkout-submit-btn flex-grow-1 d-flex align-items-center justify-content-center gap-2">
                             <i class="bi bi-upload"></i>
                             <span>Lanjutkan Pembayaran &amp; Unggah Bukti</span>
@@ -176,12 +176,17 @@ $backUrl = file_exists(__DIR__ . '/../../controllers/orders.php') ? 'index.php?p
                         </button>
                     </div>
                 <?php elseif ($status === 'Selesai' && !$isReviewed): ?>
-                    <div class="mt-4">
+                    <div class="mt-3">
                         <a href="index.php?page=review&order_id=<?= (int) $order['order_id'] ?>" class="btn checkout-submit-btn w-100 d-flex align-items-center justify-content-center gap-2">
                             <i class="bi bi-star-fill"></i>
                             <span>Berikan Ulasan</span>
                         </a>
                     </div>
+                <?php elseif ($status === 'Ditolak'): ?>
+                    <div class="mt-3">
+                        <a href="index.php?page=checkout&package_id=<?= (int) $order['package_id'] ?>" class="btn checkout-submit-btn w-100 d-flex align-items-center justify-content-center gap-2">
+                            <i class="bi bi-arrow-repeat"></i>
+                            <span>Pesan Ulang Paket Ini</span>
                 <?php elseif ($status === 'Selesai' && $hasReviews): ?>
                     <div class="mt-4">
                         <a href="index.php?page=review&order_id=<?= (int) $order['order_id'] ?>" class="btn checkout-submit-btn w-100 d-flex align-items-center justify-content-center gap-2">

@@ -41,13 +41,7 @@ $flash = $flash ?? getFlash();
     <?php include __DIR__ . '/navbar.php'; ?>
 
     <?php if (!empty($flash)): ?>
-        <?php if ($currentPage === 'profile'): ?>
-            <div class="flash-toast" id="flash-toast">
-                <?= renderFlash($flash, 'shadow-sm mb-0') ?>
-            </div>
-        <?php else: ?>
-            <div class="container mt-3 mb-3">
-                <?= renderFlash($flash, 'shadow-sm mb-0') ?>
-            </div>
-        <?php endif; ?>
+        <div class="flash-toast" id="flash-toast">
+            <?= renderFlash($flash, 'shadow-sm mb-0') ?>
+        </div>
     <?php endif; ?>

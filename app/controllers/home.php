@@ -77,12 +77,38 @@ if (!empty($dbPackages)) {
         'price' => '125.000',
     ]);
 }
-$reviews = array_map(static fn (float $rating): array => [
-    'name' => 'Luna Maya Lestari',
-    'initial_name' => 'LM',
-    'review' => 'Rasanya seperti masakan rumah sendiri. Harganya juga terjangkau. Recommended!!!!',
-    'rating' => (string) $rating,
-], [4.5, 4.0, 3.2, 3.0]);
+$reviews = [];
+try {
+    $pdo = getDBConnection();
+    $stmtRev = $pdo->query(
+        "SELECT r.rating, r.comment, u.name
+         FROM reviews r
+         JOIN orders o ON o.order_id = r.order_id
+         JOIN users u ON u.user_id = o.user_id
+         WHERE r.comment IS NOT NULL AND TRIM(r.comment) != ''
+         ORDER BY r.created_at DESC, r.review_id DESC
+         LIMIT 4"
+    );
+    foreach ($stmtRev->fetchAll() as $revRow) {
+        $reviews[] = [
+            'name' => $revRow['name'],
+            'initial_name' => getInitials($revRow['name']),
+            'review' => $revRow['comment'],
+            'rating' => (string) $revRow['rating'],
+        ];
+    }
+} catch (Throwable $e) {
+    $reviews = [];
+}
+
+if (empty($reviews)) {
+    $reviews = array_map(static fn (float $rating): array => [
+        'name' => 'Luna Maya Lestari',
+        'initial_name' => 'LM',
+        'review' => 'Rasanya seperti masakan rumah sendiri. Harganya juga terjangkau. Recommended!!!!',
+        'rating' => (string) $rating,
+    ], [4.5, 4.0, 3.2, 3.0]);
+}
 
 render('customer/home', [
     'title' => 'Beranda - Mealmate',

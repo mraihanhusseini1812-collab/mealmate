@@ -62,8 +62,7 @@
                 </div>
             </div>
             
-            <!-- weekly dekstop (radio) -->
-            <div id="weekly-selector-container" class="d-none mt-3 m-0">
+            <div id="weekly-selector-container" class="weekly-selector-collapse m-0">
                 <div class="d-none d-md-flex justify-content-center gap-2 flex-wrap">
                     <?php foreach ($days as $index => $day): ?>
                         <input type="radio" class="btn-check" name="weekly-day-radio" id="day-<?= $day ?>" value="<?= $day ?>" <?= $index === 0 ? 'checked' : '' ?> onchange="selectWeeklyDay(this.value, false)">

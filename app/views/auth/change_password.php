@@ -9,8 +9,8 @@
             <p class="text-muted small mb-4">
                 Password Anda sudah diperbarui.<br>Gunakan password baru saat login berikutnya.
             </p>
-            <a href="index.php?page=home" class="btn auth-submit-btn w-100 py-3 fw-semibold">
-                Kembali ke Beranda
+            <a href="index.php?page=profile" class="btn auth-submit-btn w-100 py-3 fw-semibold">
+                Kembali ke Profil
             </a>
         <?php else: ?>
             <a href="index.php?page=home" class="d-inline-flex flex-column align-items-center text-decoration-none text-dark mb-2">
@@ -93,7 +93,7 @@
                 </div>
 
                 <div class="d-flex gap-3">
-                    <a href="index.php?page=home" class="btn btn-light w-50 py-3 fw-semibold">Batal</a>
+                    <a href="index.php?page=profile" class="btn btn-light w-50 py-3 fw-semibold">Batal</a>
                     <button type="submit" class="btn auth-submit-btn w-50 py-3 fw-semibold">Simpan</button>
                 </div>
             </form>
