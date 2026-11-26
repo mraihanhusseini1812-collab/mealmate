@@ -18,8 +18,14 @@ $flash = $flash ?? getFlash();
         <link rel="stylesheet" href="./assets/css/menu.css">
     <?php elseif ($currentPage === 'about'): ?>
         <link rel="stylesheet" href="./assets/css/about.css">
+    <?php elseif ($currentPage === 'faq'): ?>
+        <link rel="stylesheet" href="./assets/css/faq.css">
     <?php elseif (in_array($currentPage, ['checkout', 'order-detail'], true)): ?>
         <link rel="stylesheet" href="./assets/css/checkout.css">
+    <?php elseif ($currentPage === 'orders'): ?>
+        <link rel="stylesheet" href="./assets/css/orders.css">
+    <?php elseif ($currentPage === 'review'): ?>
+        <link rel="stylesheet" href="./assets/css/review.css">
     <?php elseif ($currentPage === 'profile'): ?>
         <link rel="stylesheet" href="./assets/css/profile.css">
     <?php elseif ($currentPage === 'payment'): ?>

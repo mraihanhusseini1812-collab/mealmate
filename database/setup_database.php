@@ -32,6 +32,24 @@ try {
              NOT NULL DEFAULT 'Belum Dibayar'"
         );
 
+        // cegah ulasan ganda (order_id, menu_id)
+        $stmtIdx = $pdo->prepare(
+            "SELECT COUNT(*) FROM information_schema.STATISTICS
+             WHERE TABLE_SCHEMA = :db AND TABLE_NAME = 'reviews' AND INDEX_NAME = 'uniq_order_menu'"
+        );
+        $stmtIdx->execute(['db' => $dbName]);
+        if ((int) $stmtIdx->fetchColumn() === 0) {
+            // sisakan review_id terkecil pada pasangan yang terlanjur ganda
+            $pdo->exec(
+                "DELETE r1 FROM reviews r1
+                 JOIN reviews r2
+                   ON r1.order_id = r2.order_id
+                  AND r1.menu_id = r2.menu_id
+                  AND r1.review_id > r2.review_id"
+            );
+            $pdo->exec("ALTER TABLE reviews ADD UNIQUE KEY uniq_order_menu (order_id, menu_id)");
+            echo "unique key reviews(order_id, menu_id) ditambahkan.\n";
+        }
         echo "Seluruh tabel berhasil dibuat/diperbarui dari file schema.sql.\n";
     } else {
         die("Gagal: File schema.sql tidak ditemukan di " . $sqlFilePath . "\n");

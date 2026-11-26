@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../models/OrderModel.php';
+require_once __DIR__ . '/../models/ReviewModel.php';
 
 requireRole('Pelanggan');
 
@@ -33,7 +34,14 @@ if (!$order) {
     redirect('index.php?page=menu#packages-section');
 }
 
-$isReviewed = hasOrderReview($orderId);
+$hasReviews = false;
+$isReviewed = false;
+if ($order['status'] === 'Selesai') {
+    $reviewMenus = getReviewableMenus($order);
+    $reviewedCount = count(array_filter($reviewMenus, static fn (array $m): bool => $m['review_id'] !== null));
+    $hasReviews = $reviewedCount > 0;
+    $isReviewed = $reviewedCount === count($reviewMenus);
+}
 
 render('customer/order_detail', [
     'title' => 'Detail Pesanan #ORD-' . str_pad((string) $order['order_id'], 3, '0', STR_PAD_LEFT) . ' - MealMate',
@@ -41,4 +49,5 @@ render('customer/order_detail', [
     'hideFooter' => true,
     'order' => $order,
     'isReviewed' => $isReviewed,
+    'hasReviews' => $hasReviews,
 ]);
