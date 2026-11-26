@@ -13,11 +13,11 @@
                     Mealmate hadir untuk menemani hari-harimu dengan menu katering rumahan yang sehat, lezat, dan selalu fresh. Cocok untuk mahasiswa dan pekerja Indonesia.
                 </p>
 
-                <button class="home-cto-btn btn d-inline-flex align-items-center justify-content-center gap-2">
+                <a href="index.php?page=menu#daily-menus-section" class="home-cto-btn btn d-inline-flex align-items-center justify-content-center gap-2 text-decoration-none">
                     <i class="bi bi-fork-knife"></i>
                     <span>Lihat Menu Hari Ini</span>
                     <i class="bi bi-arrow-right"></i>
-                </button>
+                </a>
             </div>
         </div>
     </section>
@@ -123,7 +123,7 @@
 
                                 <div class="package-price">
                                     <p>Mulai dari</p>
-                                    <p>Rp <?= htmlspecialchars($package['price']) ?> <span>/ Minggu</span></p>
+                                    <p>Rp <?= htmlspecialchars($package['price']) ?> <span>/ paket</span></p>
                                 </div>
 
                                 <a href="<?= !empty($package['id']) ? 'index.php?page=checkout&package_id=' . (int) $package['id'] : 'index.php?page=menu#packages-section' ?>" class="btn">

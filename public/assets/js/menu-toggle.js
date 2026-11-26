@@ -1,7 +1,6 @@
 let currentMode = 'daily';
 let currentWeeklyDay = 'Senin';
 
-// escape teks database supaya tidak dijalankan sebagai HTML
 function escapeHtml(value) {
     return String(value ?? '')
         .replace(/&/g, '&amp;')
@@ -9,38 +8,46 @@ function escapeHtml(value) {
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#39;');
-} 
+}
 
-// switch mode daily or weekly
+function detectTodayDayName() {
+    if (typeof todayFormatted === 'string' && todayFormatted.includes(',')) {
+        const dayCandidate = todayFormatted.split(',')[0].trim();
+        if (typeof weeklyData === 'object' && weeklyData !== null && dayCandidate in weeklyData) {
+            return dayCandidate;
+        }
+    }
+    return 'Senin';
+}
+
 function switchMode(mode) {
     currentMode = mode;
-    
+
     const btnDaily = document.getElementById('btn-mode-daily');
     const btnWeeklyDesktop = document.getElementById('btn-mode-weekly');
     const btnWeeklyMobile = document.getElementById('btn-mode-weekly-mobile');
     const selectorContainer = document.getElementById('weekly-selector-container');
 
     if (mode === 'daily') {
-        // tombol harian aktif
         btnDaily.classList.add('active');
         btnDaily.classList.remove('non-active');
 
-        // tombol mingguan mati
-      if (btnWeeklyDesktop) {
+        if (btnWeeklyDesktop) {
             btnWeeklyDesktop.classList.add('non-active');
             btnWeeklyDesktop.classList.remove('active');
-        }  
+        }
         if (btnWeeklyMobile) {
             btnWeeklyMobile.classList.add('non-active');
             btnWeeklyMobile.classList.remove('active');
             document.getElementById('mobile-dropdown-label').innerText = 'Menu Minggu ini';
         }
-        
-        selectorContainer.classList.add('d-none');
-        updateHeader("Menu Hari ini", "Menu yang tersedia untuk hari ini", todayFormatted);
+
+        if (selectorContainer) {
+            selectorContainer.classList.remove('is-open');
+        }
+        updateHeader('Menu Hari ini', 'Menu yang tersedia untuk hari ini', todayFormatted);
         renderCards(dailyData);
     } else {
-        // mode mingguan dekstop
         btnDaily.classList.add('non-active');
         btnDaily.classList.remove('active');
 
@@ -48,12 +55,13 @@ function switchMode(mode) {
             btnWeeklyDesktop.classList.add('active');
             btnWeeklyDesktop.classList.remove('non-active');
         }
-        
-        selectorContainer.classList.remove('d-none');
+
+        if (selectorContainer) {
+            selectorContainer.classList.add('is-open');
+        }
         selectWeeklyDay(currentWeeklyDay, false);
     }
 }
-
 
 function selectWeeklyDay(day, isMobileSelect = false) {
     currentWeeklyDay = day;
@@ -62,34 +70,30 @@ function selectWeeklyDay(day, isMobileSelect = false) {
     const btnWeeklyDesktop = document.getElementById('btn-mode-weekly');
     const btnWeeklyMobile = document.getElementById('btn-mode-weekly-mobile');
 
-    // pemicu dari dropdown mobile
     if (isMobileSelect) {
         currentMode = 'weekly';
-        
-        // tombol harian mati
+
         btnDaily.classList.add('non-active');
         btnDaily.classList.remove('active');
-        
-        // ngubah label ke hari yang dipilih di dropdown
+
         if (btnWeeklyMobile) {
             btnWeeklyMobile.classList.add('active');
             btnWeeklyMobile.classList.remove('non-active');
             document.getElementById('mobile-dropdown-label').innerText = `${day}`;
         }
 
-        // jika pakai mobile di desktop ngilang
         if (btnWeeklyDesktop) {
             btnWeeklyDesktop.classList.add('active');
             btnWeeklyDesktop.classList.remove('non-active');
         }
     }
 
-    // radio button dekstop
     const radioElem = document.getElementById(`day-${day}`);
-    if (radioElem) radioElem.checked = true;
+    if (radioElem) {
+        radioElem.checked = true;
+    }
 
-    // update hari
-    const dayData = weeklyData[day] || {};
+    const dayData = (typeof weeklyData === 'object' && weeklyData !== null) ? (weeklyData[day] || {}) : {};
     const menus = dayData.menus || [];
     const dateText = dayData.tanggal || day;
 
@@ -97,25 +101,31 @@ function selectWeeklyDay(day, isMobileSelect = false) {
     renderCards(menus);
 }
 
-// update dmc-1
 function updateHeader(title, subtitle, date) {
+    const headerContainer = document.getElementById('header-container');
+    if (headerContainer) {
+        headerContainer.classList.add('is-switching');
+        setTimeout(() => headerContainer.classList.remove('is-switching'), 160);
+    }
     document.getElementById('header-title').innerText = title;
     document.getElementById('header-subtitle').innerText = subtitle;
     document.getElementById('header-date').innerText = date;
 }
 
-// render card di dmc-3
 function renderCards(menus) {
     const container = document.getElementById('menu-cards-container');
-    container.innerHTML = '';
-
-    if (!menus || menus.length === 0) {
-        container.innerHTML = '<div class="col-12 text-center py-2"><p class="text-muted">Menu belum tersedia.</p></div>';
+    if (!container) {
         return;
     }
 
-    menus.forEach(item => {
-        //badge & icon berdasarkan slot waktu
+    if (!menus || menus.length === 0) {
+        container.innerHTML = '<div class="col-12 text-center py-5 menu-card-animate"><p class="text-muted mb-0">Belum ada jadwal menu yang tersedia</p></div>';
+        return;
+    }
+
+    let allCardsHtml = '';
+
+    menus.forEach((item, index) => {
         let badgeClass = 'badge-pagi';
         let iconClass = 'bi-sunrise';
 
@@ -127,27 +137,24 @@ function renderCards(menus) {
             iconClass = 'bi-moon-stars';
         }
 
-        // rating dari controller
-        const rating = Number(item.rating) || 0;     // menu tanpa ulasan = 0 bintang
-        const reviews = Number(item.reviews) || 0;   // jumlah ulasan default 0
+        const rating = Number(item.rating) || 0;
+        const reviews = Number(item.reviews) || 0;
         let starsHtml = '';
 
         for (let i = 1; i <= 5; i++) {
             if (rating >= i) {
-                // bintang Penuh
                 starsHtml += '<i class="bi bi-star-fill"></i>';
             } else if (rating >= i - 0.5) {
-                // bintang setengah (rating x.5)
                 starsHtml += '<i class="bi bi-star-half"></i>';
             } else {
-                // bintang Kosong
                 starsHtml += '<i class="bi bi-star"></i>';
             }
         }
 
-        // template card di dmc-3
-        const cardHtml = `
-            <div class="card-container col-md d-flex justify-content-center align-items-center p-0 gap-3">
+        const delayMs = index * 55;
+
+        allCardsHtml += `
+            <div class="card-container col-md d-flex justify-content-center align-items-center p-0 gap-3 menu-card-animate" style="animation-delay: ${delayMs}ms;">
                 <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden" style="max-width: 400px;">
                     <div class="position-relative">
                         <img src="./assets/img/${escapeHtml(item.image)}" class="card-img-top" alt="${escapeHtml(item.menu_name)}" loading="lazy" style="width: 100%; height: 220px; object-fit: cover;">
@@ -163,7 +170,7 @@ function renderCards(menus) {
                         <p class="card-text text-muted small flex-grow-1">
                             ${escapeHtml(item.description)}
                         </p>
-                        
+
                         <div class="d-flex align-items-center gap-1 mt-2">
                             <div class="text-warning small">
                                 ${starsHtml}
@@ -174,15 +181,17 @@ function renderCards(menus) {
                 </div>
             </div>
         `;
-        container.innerHTML += cardHtml;
     });
+
+    container.innerHTML = allCardsHtml;
 }
 
-// jalanin switch mode daily ketika html siap rawrrr
 document.addEventListener('DOMContentLoaded', () => {
-    // file dimuat di semua halaman lewat footer.php, jadi cek dulu elemennya ada
     if (document.getElementById('btn-mode-daily')) {
-        switchMode('daily');
+        currentWeeklyDay = detectTodayDayName();
+        const urlParams = new URLSearchParams(window.location.search);
+        const requestedMode = urlParams.get('mode') === 'weekly' ? 'weekly' : 'daily';
+        switchMode(requestedMode);
     }
     initPackageSlider();
 });
@@ -215,7 +224,7 @@ function initPackageSlider() {
 
     track.addEventListener('scroll', updateNav, { passive: true });
     window.addEventListener('resize', updateNav);
-    window.addEventListener('load', updateNav);   
+    window.addEventListener('load', updateNav);
     if ('ResizeObserver' in window) new ResizeObserver(updateNav).observe(track);
 
     updateNav();

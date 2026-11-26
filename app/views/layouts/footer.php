@@ -11,8 +11,8 @@
             <div class="menu-footer-container d-grid d-md-flex justify-content-md-start">
                 <div class="menu-footer">
                     <h5 class="mb-3">Menu</h5>
-                    <p><a href="index.php?page=menu" class="text-decoration-none">Menu Hari Ini</a></p>
-                    <p><a href="index.php?page=menu" class="text-decoration-none">Menu Mingguan</a></p>
+                    <p><a href="index.php?page=menu#daily-menus-section" class="text-decoration-none">Menu Hari Ini</a></p>
+                    <p><a href="index.php?page=menu&mode=weekly#daily-menus-section" class="text-decoration-none">Menu Mingguan</a></p>
                     <p><a href="index.php?page=menu#packages-section" class="text-decoration-none">Paket Langganan</a></p>
                 </div>
 
